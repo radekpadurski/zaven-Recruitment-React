@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, Input } from 'reactstrap';
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -27,7 +28,7 @@ const LoginForm = () => {
   return (
     <form className="form" onSubmit={submit}>
       <div>
-        <input
+        <Input
           type="text"
           placeholder="Username"
           value={username}
@@ -35,7 +36,7 @@ const LoginForm = () => {
         />
       </div>
       <div>
-        <input
+        <Input
           type="password"
           placeholder="Password"
           value={password}
@@ -43,7 +44,7 @@ const LoginForm = () => {
         />
       </div>
       <div>
-        <button type="submit">Sign in</button>
+        <Button type="submit">Sign in</Button>
       </div>
     </form>
   );
