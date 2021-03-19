@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Input } from 'reactstrap';
+import { Button, Input } from "reactstrap";
+import axios from "axios";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -7,22 +8,23 @@ const LoginForm = () => {
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("http://localhost:3333/login", {
-      headers: {
-        "Content-Type": "application/json",
-      },
+    axios({
       method: "POST",
-      body: JSON.stringify({
+      url: "http://localhost:3333/login",
+      data: JSON.stringify({
         username: username,
         password: password,
       }),
-    }).then((response) => {
-      if (response.ok) {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
         alert("Success!");
-      } else {
+      })
+      .catch((error) => {
         alert("Failed!");
-      }
-    });
+      });
   };
 
   return (
