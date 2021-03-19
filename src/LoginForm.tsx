@@ -10,7 +10,7 @@ const LoginForm = () => {
     e.preventDefault();
     axios({
       method: "POST",
-      url: "http://localhost:3333/login",
+      url: `${process.env.REACT_APP_API_URL}`,
       data: JSON.stringify({
         username: username,
         password: password,
