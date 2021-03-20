@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +10,8 @@ const LoginForm = () => {
   const [usernameValidation, setUsernameValidation] = useState("");
   const [passwordValidation, setPasswordValidation] = useState("");
   const [loginFaildMessage, setloginFaildMessage] = useState("");
+  const [cookies, setCookie] = useCookies();
+
   const history = useHistory();
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +35,8 @@ const LoginForm = () => {
       })
         .then((res) => {
           setloginFaildMessage("");
+          console.log(res.data);
+          setCookie("token", res.data.token);
           history.push("/dashboard");
         })
         .catch((error) => {
