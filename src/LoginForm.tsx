@@ -1,49 +1,93 @@
 import React, { useState } from "react";
-import { Button, Input } from "reactstrap";
+import { Alert, Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import axios from "axios";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [usernameValidation, setUsernameValidation] = useState("");
+  const [passwordValidation, setPasswordValidation] = useState("");
+  const [loginFaildMessage, setloginFaildMessage] = useState("");
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios({
-      method: "POST",
-      url: `${process.env.REACT_APP_API_URL}`,
-      data: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        alert("Success!");
+    if (username === "") {
+      setUsernameValidation("Required field *");
+    }
+    if (password === "") {
+      setPasswordValidation("Required field *");
+    }
+    if (username !== "" && password !== "") {
+      axios({
+        method: "POST",
+        url: `${process.env.REACT_APP_API_URL}`,
+        data: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        alert("Failed!");
-      });
+        .then((res) => {
+          setloginFaildMessage("");
+          alert("Success!");
+        })
+        .catch((error) => {
+          switch (error.response?.data) {
+            case undefined:
+              setloginFaildMessage("Network error, please try again");
+              break;
+            case "Wrong credentials":
+              setloginFaildMessage("Wrong username/password");
+              break;
+            default:
+              setloginFaildMessage("Login error, please try again");
+              break;
+          }
+        });
+    }
   };
+  const onDismiss = () => setloginFaildMessage("");
 
   return (
     <form className="form" onSubmit={submit}>
       <div>
-        <Input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <div>
+          <Alert color="danger" isOpen={!!loginFaildMessage} toggle={onDismiss} fade={false}>
+            {loginFaildMessage}
+          </Alert>
+        </div>
+        <FormGroup>
+          <Label>Username:</Label>
+          <Input
+            invalid={!!usernameValidation}
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => {
+              setUsernameValidation("");
+              setUsername(e.target.value);
+            }}
+          />
+          <FormFeedback>{usernameValidation}</FormFeedback>
+        </FormGroup>
       </div>
       <div>
-        <Input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <FormGroup>
+          <Label>Password:</Label>
+          <Input
+            invalid={!!passwordValidation}
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPasswordValidation("");
+              setPassword(e.target.value);
+            }}
+          />
+          <FormFeedback>{passwordValidation}</FormFeedback>
+        </FormGroup>
       </div>
       <div>
         <Button type="submit">Sign in</Button>
