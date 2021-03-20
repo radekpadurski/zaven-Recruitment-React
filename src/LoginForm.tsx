@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -8,7 +9,7 @@ const LoginForm = () => {
   const [usernameValidation, setUsernameValidation] = useState("");
   const [passwordValidation, setPasswordValidation] = useState("");
   const [loginFaildMessage, setloginFaildMessage] = useState("");
-
+  const history = useHistory();
   const submit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (username === "") {
@@ -31,7 +32,7 @@ const LoginForm = () => {
       })
         .then((res) => {
           setloginFaildMessage("");
-          alert("Success!");
+          history.push("/dashboard");
         })
         .catch((error) => {
           switch (error.response?.data) {
