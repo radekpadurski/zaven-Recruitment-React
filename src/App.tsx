@@ -4,6 +4,7 @@ import LoginForm from "./LoginForm";
 import "./App.css";
 import Dashboard from "./Dashboard";
 import { CookiesProvider } from "react-cookie";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
@@ -17,9 +18,9 @@ function App() {
             <Route path="/login">
               <LoginForm />
             </Route>
-            <Route path="/dashboard">
+            <PrivateRoute path="/dashboard">
               <Dashboard />
-            </Route>
+            </PrivateRoute>
           </Switch>
         </div>
       </Router>

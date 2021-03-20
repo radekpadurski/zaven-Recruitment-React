@@ -1,6 +1,5 @@
 import React from "react";
 import { useCookies } from "react-cookie";
-import { Button } from "reactstrap";
 
 const Dashboard = () => {
   const [cookies, setCookie] = useCookies();
