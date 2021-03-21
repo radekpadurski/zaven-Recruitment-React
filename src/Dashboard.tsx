@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useContext, useCallback, useState } from "react";
-import { UserContext, useUserContext } from "./User.contex";
+import React from "react";
+import { useUserContext } from "./User.contex";
+import { Navbar, NavbarText } from "reactstrap";
 
 const Dashboard = () => {
   const {
@@ -32,7 +33,10 @@ const Dashboard = () => {
   updateUserData();
   return (
     <div>
-      <h1>Dashboard</h1>
+      <Navbar color="dark">
+        <NavbarText style={{ color: "white" }}>Dashboard</NavbarText>
+      </Navbar>
+      <h1>Dashboard Site</h1>
     </div>
   );
 };
