@@ -1,7 +1,8 @@
 import axios from "axios";
 import React from "react";
 import { useUserContext } from "./User.contex";
-import { Navbar, NavbarText } from "reactstrap";
+import { Button, Navbar, NavbarText } from "reactstrap";
+import { useCookies } from "react-cookie";
 
 const Dashboard = () => {
   const {
@@ -12,6 +13,7 @@ const Dashboard = () => {
     username,
     setUsername,
   } = useUserContext();
+  const [cookies, setCookie, removeCookie] = useCookies();
 
   const updateUserData = () => {
     axios({
@@ -31,12 +33,18 @@ const Dashboard = () => {
       });
   };
   updateUserData();
+
+  function handleClickButton() {
+    removeCookie("token");
+  }
+
   return (
     <div>
       <Navbar color="dark">
         <NavbarText style={{ color: "white" }}>
           First Name: {firstName} Last Name: {lastName}
         </NavbarText>
+        <Button onClick={handleClickButton}>Logout</Button>
       </Navbar>
       <h1>Dashboard Site</h1>
     </div>
