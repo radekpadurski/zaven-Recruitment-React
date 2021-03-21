@@ -24,7 +24,7 @@ const LoginForm = () => {
     if (username !== "" && password !== "") {
       axios({
         method: "POST",
-        url: `${process.env.REACT_APP_API_URL}`,
+        url: `${process.env.REACT_APP_API_URL_LOGIN}`,
         data: JSON.stringify({
           username: username,
           password: password,
