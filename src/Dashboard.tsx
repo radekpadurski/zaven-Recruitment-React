@@ -34,7 +34,9 @@ const Dashboard = () => {
   return (
     <div>
       <Navbar color="dark">
-        <NavbarText style={{ color: "white" }}>Dashboard</NavbarText>
+        <NavbarText style={{ color: "white" }}>
+          First Name: {firstName} Last Name: {lastName}
+        </NavbarText>
       </Navbar>
       <h1>Dashboard Site</h1>
     </div>
